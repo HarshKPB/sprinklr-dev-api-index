@@ -1,0 +1,841 @@
+---
+title: "Message v1"
+slug: message-v1
+url: https://dev.sprinklr.com/message-v1
+---
+
+# Message v1
+
+#   Message v1
+
+All the data pulled in from digital channels is stored in the form of a standard Universal Message object in Sprinklr. Messages are either inbound (posts coming from a channel) or outbound (posts to a channel from Sprinklr). This includes Ads, Listening, Organic and any external data ingested into the platform.
+
+Once the message is ingested into Sprinklr, it is automatically assigned with a unique message ID which is aka UMID and the same can be fetched using the Fetch Message by ID API.
+
+**Dev Notes: **`messageId`= sourceType + “_”+ sourceId + “_” + ChannelCreatedTime + “_” + “[ChannelType](https://dev.sprinklr.com/channels-v1)” + “_” + ” [MessageType](https://dev.sprinklr.com/message-v1#message-type)“ +”_” + channelMessageId.
+
+You can also take actions on these messages like HIDE, UNHIDE, LIKE, UNLIKE, FAVORITE, UNFAVORITE, DELETE, APPROVE, REJECT, etc. These actions are specific to native [channel types](https://www.sprinklr.com/help/categories/channels/633c5cb1a5d73616a985da8e).
+
+## Message Types
+
+Supported message types per channel:
+
+### Twitter
+
+- TIMELINE_TYPE_CODE = 1
+
+- UPDATE_TYPE_CODE = 2
+
+- SENT_DM_TYPE_CODE = 3
+
+- REC_MENTION_TYPE_CODE = 4
+
+- REC_DM_TYPE_CODE = 5
+
+- REPLY_TYPE_CODE = 7
+
+- RETWEET_TYPE_CODE = 8
+
+- SENT_REPLY_TYPE_CODE = 11
+
+- SENT_RETWEET_TYPE_CODE = 12
+
+- SENT_MENTION_TYPE_CODE = 13
+
+### Facebook
+
+- FB_COMMENT_TYPE_CODE = 14
+
+- FB_POST_TYPE_CODE = 15
+
+- FB_REPLY_TYPE = 97
+
+- FB_EVENT_TYPE_CODE = 217
+
+- FB_PRIVATE_MESSAGE_TYPE_CODE = 38
+
+- FB_SENT_PRIVATE_MESSAGE_TYPE_CODE = 39
+
+- FB_GROUP_POST =109
+
+- FB_GROUP_COMMENT = 110
+
+- FB_SHARE = 227
+
+### Instagram
+
+- INSTAGRAM_POST_TYPE_CODE = 36
+
+- INSTAGRAM_COMMENT_TYPE_CODE = 37
+
+- INSTAGRAM_STORY = 272
+
+- INSTAGRAM_REPLY_TYPE_CODE = 306
+
+### Youtube
+
+- YT_REPLY_TYPE_CODE = 42
+
+- YT_PLAYLIST_TYPE_CODE = 43
+
+- YT_COMMENTS_TYPE_CODE = 44
+
+- YT_VIDEOS_TYPE_CODE = 45
+
+### LinkedIn
+
+- LINKED_IN_POST_TYPE_CODE = 16
+
+- LINKED_IN_PROFILE_COMMENT = 114
+
+- LKG_POST_TYPE_CODE = 22
+
+- LKG_COMMENT_TYPE_CODE = 23
+
+- LINKED_IN_COMPANY_JOB_POSTING = 64
+
+- LINKED_IN_COMPANY_POSITION_CHANGE = 65
+
+- LINKED_IN_COMPANY_NEW_PRODUCT = 67
+
+- LINKED_IN_COMPANY_STATUS_UPDATE = 68
+
+- LINKED_IN_COMPANY_COMMENT = 70
+
+### TikTok
+
+- TIKTOK_AD_CREATIVE = 425
+
+- TIKTOK_AD_REPLY = 414
+
+- TIKTOK_AD_COMMENT = 413
+
+- TIKTOK_REPLY = 402
+
+- TIKTOK_COMMENT = 401
+
+- TIKTOK_VIDEO = 393
+
+### GooglePlus
+
+- GPLUS_ACTIVITY = 87
+
+- GPLUS_COMMENT = 88
+
+### SlideShare
+
+- SS_SLIDESHOWS_TYPE_CODE = 46
+
+### Flickr
+
+- FK_PHOTOS_TYPE_CODE = 51
+
+- FK_COMMENT_TYPE_CODE = 112
+
+### Tumblr
+
+- TUMBLR_PORT_TYPE_CODE
+
+### WordPress
+
+- WP_POST_TYPE_CODE
+
+- WP_COMMENT_TYPE_CODE
+
+### Social Feedback
+
+- SF_NEW_TYPE_CODE = 52
+
+- SF_ARCHIVED_TYPE_CODE = 53
+
+- SF_IN_CONVERSATION_TYPE_CODE = 54
+
+- SF_POST_SUB_TYPE_QUESTION_CODE = 55
+
+- SF_REPLY_TYPE_CODE = 56
+
+### SIna Weibo
+
+- WEIBO_STATUS_TYPE_CODE = 57
+
+- WEIBO_COMMENT_TYPE_CODE = 58
+
+- WEIBO_REPLY_TYPE_CODE = 59
+
+- WEIBO_MENTION_TYPE_CODE = 60
+
+- WEIBO_REPOST_TYPE_CODE = 61
+
+- WEIBO_STATUS_OTHERS_TYPE_CODE = 62
+
+- WEIBO_PERSISTENT_TYPE_CODE = 63
+
+### RenRen
+
+- RR_COMMENT_TYPE_CODE = 76
+
+- RR_MUSIC_TYPE_CODE = 77
+
+- RR_STATUS_TYPE_CODE = 75
+
+- RR_LINK_TYPE_CODE = 71
+
+- RR_BLOG_TYPE_CODE = 72
+
+- RR_ALBUM_TYPE_CODE = 73
+
+- RR_VIDEO_TYPE_CODE = 74
+
+- RR_PHOTO_TYPE_CODE = 86
+
+### Tencent Weibo
+
+- TENCENT_WEIBO_ORIGINAL_TYPE_CODE = 78
+
+- TENCENT_WEIBO_PRIVATE_MESSAGE_SEND_TYPE_CODE = 79
+
+- TENCENT_WEIBO_COMMENT_TYPE_CODE= 80
+
+- TENCENT_WEIBO_MENTION_TYPE_CODE= 81
+
+- TENCENT_WEIBO_REPLY_TYPE_CODE= 82
+
+- TENCENT_WEIBO_REPOST_TYPE_CODE =83
+
+- TENCENT_WEIBO_EMPTY_REPLY_TYPE_CODE = 84
+
+- TENCENT_WEIBO_PRIVATE_MESSAGE_RECEIVE_TYPE_CODE = 85
+
+### VK
+
+- VK_GROUP_POST_TYPE_CODE = 91
+
+- VK_GROUP_COMMENT_TYPE_CODE = 92
+
+- VK_GROUP_TOPIC_TYPE_CODE = 93
+
+- VK_GROUP_TOPIC_COMMENT_TYPE_CODE = 94
+
+#### Some Additional Codes
+
+
+
+TIMELINE_TYPE_CODE = 1
+UPDATE_TYPE_CODE = 2
+SENT_DM_TYPE_CODE = 3
+REC_MENTION_TYPE_CODE = 4
+REC_DM_TYPE_CODE = 5
+REPLY_TYPE_CODE = 7
+RETWEET_TYPE_CODE = 8
+AUTO_DM_TYPE_CODE = 9
+SENT_REPLY_TYPE_CODE = 11
+SENT_RETWEET_TYPE_CODE = 12
+SENT_MENTION_TYPE_CODE = 13
+FB_COMMENT_TYPE_CODE = 14
+FB_POST_TYPE_CODE = 15
+LINKED_IN_POST_TYPE_CODE = 16
+WP_POST_TYPE_CODE = 17
+WP_COMMENT_TYPE_CODE = 18
+TUMBLR_POST_TYPE_CODE = 19
+TUMBLR_COMMENT_TYPE_CODE = 20
+SS_POST_TYPE_CODE = 21
+LKG_POST_TYPE_CODE = 22
+LKG_COMMENT_TYPE_CODE = 23
+CH_TWITTER_TYPE_CODE = 24
+CH_FACEBOOK_TYPE_CODE = 25
+CH_BLOG_TYPE_CODE = 26
+CH_FORUM_TYPE_CODE = 27
+CH_NEWS_TYPE_CODE = 28
+CH_COMMENTS_TYPE_CODE = 29
+CH_FLICKR_TYPE_CODE = 30
+CH_YOUTUBE_TYPE_CODE = 31
+CH_CUSTOM_TYPE_CODE = 32
+MESSAGE_SUB_TYPE_CODE_STATUS = 35
+//Instagram Related Message
+INSTAGRAM_POST_TYPE_CODE = 36
+INSTAGRAM_COMMENT_TYPE_CODE = 37
+//fb private message
+FB_PRIVATE_MESSAGE_TYPE_CODE = 38
+FB_SENT_PRIVATE_MESSAGE_TYPE_CODE = 39
+DEL_DM_TYPE_CODE = 40
+DEL_TWEET_TYPE_CODE = 41
+// you tube
+YT_REPLY_TYPE_CODE = 42
+YT_PLAYLIST_TYPE_CODE = 43
+YT_COMMENTS_TYPE_CODE = 44
+YT_VIDEOS_TYPE_CODE = 45
+// Four square
+//Deprecated - msg constants used in old ui
+FS_RECENT_CHECKINS_TYPE_CODE = 47
+FS_MY_CHECKINS_TYPE_CODE = 48
+// Gowalla
+GW_ACTIVITY_TYPE_CODE = 49
+GW_MY_CHECKINS_TYPE_CODE = 50
+// Flickr
+FK_PHOTOS_TYPE_CODE = 51
+//SF means Social Feedback
+SF_POST_TYPE_CODE = 33
+SF_COMMENT_TYPE_CODE = 34
+// SF
+SF_NEW_TYPE_CODE = 52
+SF_ARCHIVED_TYPE_CODE = 53
+SF_IN_CONVERSATION_TYPE_CODE = 54
+SF_POST_SUB_TYPE_QUESTION_CODE = 55
+SF_BRAND_COMMENT_TYPE_CODE = 56
+WEIBO_STATUS_TYPE_CODE = 57
+WEIBO_COMMENT_TYPE_CODE = 58
+WEIBO_REPLY_TYPE_CODE = 59
+WEIBO_MENTION_TYPE_CODE = 60
+WEIBO_REPOST_TYPE_CODE = 61
+WEIBO_STATUS_OTHERS_TYPE_CODE = 62
+WEIBO_PERSISTENT_TYPE_CODE = 63
+// type of LinkedIn Company posts and commments
+LINKED_IN_COMPANY_JOB_POSTING = 64
+LINKED_IN_COMPANY_POSITION_CHANGE = 65
+LINKED_IN_COMPANY_PROFILE_CHANGE = 66
+LINKED_IN_COMPANY_NEW_PRODUCT = 67
+LINKED_IN_COMPANY_STATUS_UPDATE = 68
+//LINKED_IN_COMPANY_POST = 69
+LINKED_IN_COMPANY_COMMENT = 70
+RR_COMMENT_TYPE_CODE = 76
+RR_MUSIC_TYPE_CODE = 77
+RR_STATUS_TYPE_CODE = 75
+RR_LINK_TYPE_CODE = 71
+RR_BLOG_TYPE_CODE = 72
+RR_ALBUM_TYPE_CODE = 73
+RR_VIDEO_TYPE_CODE = 74
+RR_PHOTO_TYPE_CODE = 86
+// type of LinkedIn Group posts and comments
+LINKED_IN_GROUP_POST = LKG_POST_TYPE_CODE;
+LINKED_IN_GROUP_COMMENT = LKG_COMMENT_TYPE_CODE;
+// type of Tencent Weibo post and comments
+TENCENT_WEIBO_ORIGINAL_TYPE_CODE = 78
+TENCENT_WEIBO_PRIVATE_MESSAGE_SEND_TYPE_CODE = 79
+TENCENT_WEIBO_COMMENT_TYPE_CODE = 80
+TENCENT_WEIBO_MENTION_TYPE_CODE = 81
+TENCENT_WEIBO_REPLY_TYPE_CODE = 82
+TENCENT_WEIBO_REPOST_TYPE_CODE = 83
+TENCENT_WEIBO_EMPTY_REPLY_TYPE_CODE = 84
+TENCENT_WEIBO_PRIVATE_MESSAGE_RECEIVE_TYPE_CODE = 85
+//message types for GooglePlus
+GPLUS_ACTIVITY = 87
+GPLUS_COMMENT = 88
+//message types for RSS Feed
+RSS_FEED = 89
+// type of VK group message type
+VK_POST_TYPE_CODE = 91
+VK_COMMENT_TYPE_CODE = 92
+VK_TOPIC_TYPE_CODE = 93
+VK_TOPIC_COMMENT_TYPE_CODE = 94
+// type of VK profile message type
+VK_PROFILE_POST_TYPE_CODE = 95
+VK_PROFILE_COMMENT_TYPE_CODE = 96
+FB_REPLY_TYPE_CODE = 97
+//DataSift Message
+WEB_BLOG_POST = 98
+WEB_BLOG_COMMENT = 99
+WEB_FORUMS = 100
+WP_REPLY_TYPE_CODE = 101
+//msg constants used in new UI
+FS_CHECKIN_TYPE_CODE = 102
+FS_TIP_TYPE_CODE = 103
+FS_PHOTO_TYPE_CODE = 104
+FS_SPECIAL_TYPE_CODE = 105
+FS_UPDATE_TYPE_CODE = 106
+CH_WEIBO_TYPE_CODE = 107
+CH_REVIEWS_TYPE_CODE = 108
+//message types for facebook groups
+FB_GROUP_POST = 109
+FB_GROUP_COMMENT = 110
+FB_GROUP_REPLY = 111
+public static final Set RETWEET_MESSAGE_TYPES = Collections.unmodifiableSet(
+SprinklrCollectionUtils.toSet(Arrays.asList(SENT_RETWEET_TYPE_CODE, WEIBO_REPOST_TYPE_CODE, TENCENT_WEIBO_REPOST_TYPE_CODE)));
+//Flickr contd.
+FK_COMMENT_TYPE_CODE = 112
+WEB_REDDIT_POST = 113
+//Linkedin Network
+LINKEDIN_PROFILE_COMMENT = 114
+WEB_NEWS = 115
+//Get satisfaction topic
+GS_TOPIC = 116
+// Livechat
+LIVECHAT_POST = 117
+// message types for Zendesk
+ZD_TICKET = 118
+ZD_TICKET_COMMENT = 119
+// BAZAAR voice
+BAZAAR_VOICE_REVIEW = 121
+BAZAAR_VOICE_STORY = 122
+BAZAAR_VOICE_QUESTION = 123
+BAZAAR_VOICE_REVIEW_COMMENT = 124
+BAZAAR_VOICE_STORY_COMMENT = 125
+BAZAAR_VOICE_ANSWER = 126
+// survey monkey
+SURVEY_MONKEY_RESPONSE = 127
+SPR_COMMUNITY_BRAND_REPLY_TYPE_CODE = 128
+SPR_COMMUNITY_REPLY_TYPE_CODE = 129
+// Clarabridge
+CB_CUSTOM_TYPE_CODE = 130
+// Web Listening Data Types
+ARTICLES_TYPE = 131
+REVIEWS_TYPE = 132
+//Marketo
+MARKETO_ACTIVITY = 134
+//Pinterest
+PINTEREST_PIN = 135
+PINTEREST_BOARD = 136
+PINTEREST_PIN_COMMENT = 137
+// Videos crawled for WEB
+WEB_VIDEO = 138
+WEB_VIDEO_COMMENT = 139
+//JiveSpace
+JIVE_DISCUSSION = 140
+JIVE_COMMENT = 141
+JIVE_REPLY = 142
+//Benchmarking
+LINKEDIN_EMPLOYEE_UPDATE = 143
+//Zimbra
+ZIMBRA_THREAD = 144
+ZIMBRA_REPLY = 145
+//todo which of the categories below to include
+//WeChat message type used for conversation message.
+WECHAT_CONVERSATION_MESSAGE = 146
+//Exact Target
+EXACT_TARGET_EMAIL_TYPE_CODE = 147
+//MOZILLA
+MOZILLA_HOME_SNIPPET_TYPE_CODE = 148
+//WeChat message type used for post (New published brand content, that are sent via Sprinklr) message.
+WECHAT_POST_MESSAGE = 149
+//SOCIAL Apps
+//Profile update on site
+SITE_UPDATE = 150
+//Comment on other's profile
+SITE_PROFILE_POST = 151
+//Reply on comment of profile
+SITE_REPLY = 152
+FORUM_MESSAGE = 153
+FORUM_COMMENT = 154
+FORUM_REPLY = 155
+//Social apps
+WIDGET_COMMENTS = 156
+SITE_SHARE_MESSAGE = 157
+WIDGET_CONTENT = 158
+FLAG = 159
+LITHIUM_TOPIC = 160
+LITHIUM_MESSAGE = 161
+//Nike
+NIKE_FEED_COMMENT = 162
+NIKE_POST = 163
+//Pluck
+PLUCK_REVIEW = 164
+PLUCK_COMMENT = 165
+PLUCK_REPLY = 166
+//Ebay
+EBAY_AUCTION = 167
+EBAY_REVIEW = 168
+//PublicPage Suggested
+VK_PAGE_SUGGESTED_POST_TYPE_CODE = 169
+WIDGET_REPLY = 171
+//Get satisfaction
+GS_REPLY = 170
+GS_COMMENT = 172
+ZIMBRA_PRIVATE_MESSAGE = 173
+//socialApps
+SITE_USER_STORY = 174
+EMAIL = 175
+//Line
+LINE_MESSAGE = 177
+LINE_OPERATION = 178
+LINE_TARGETING_MESSAGE = 179
+//Xing
+XING_MESSAGE = 180
+XING_COMMENT = 181
+XING_FEED = 182
+XING_JOB_POSTING = 183
+XING_STATUS = 184
+XING_BOOKMARK = 185
+XING_COMPANY_PROFILE_UPDATE = 186
+XING_GROUP = 187
+GPLUS_REVIEW = 188
+//Weibo Direct Message
+WEIBO_DM_TYPE_CODE = 189
+WEIBO_DM_BULK_TYPE_CODE = 190
+TMOBILE_TYPE_CODE = 191
+UNDER_ARMOUR_POST_TYPE_CODE = 192
+UNDER_ARMOUR_COMMENT_TYPE_CODE = 193
+UNDER_ARMOUR_REPOST_TYPE_CODE = 194
+GMAIL_MESSAGE_TYPE_CODE = 195
+//FbInsta AD account
+FB_INSTAGRAM_AD_POST_TYPE_CODE = 196
+FB_INSTAGRAM_AD_COMMENT_TYPE_CODE = 197
+//ADVOCACY message Types
+ADVOCACY_POLL_RESPONSE = 198
+ADVOCACY_WIDGET_ENTITY = 199
+ADVOCACY_WIDGET = 200
+/**
+* This is the message type for upload widget content
+*/
+ADVOCACY_UPLOAD_CONTENT = 201
+ADVOCACY_SHARE_CONTENT = 202
+ADVOCACY_ASSET_COMMENT = 203
+ADVOCACY_WIDGET_COMMENT = 204
+ADVOCACY_DISPLAY_CONTENT = 205
+UNDER_ARMOUR_PUBLIC_FEED_TYPE = 206
+UNDER_ARMOUR_PUBLIC_FEED_COMMENT_TYPE = 207
+ADV_ASSET_COMMENT_REPLY = 208
+ADV_WIDGET_COMMENT_REPLY = 209
+SPRINKLR_COMMERCE_REVIEW = 210
+SPRINKLR_COMMERCE_REPLY = 211
+VK_BUSINESS_MESSAGE_TYPE_CODE = 212
+ADV_USER_UPLOAD_CONTENT = 213
+//TODO change this before merging to master
+OUTLOOK_MAIL_TYPE_CODE = 214
+//dataflow message types
+GCR_DATA = 215
+DEFAULT_DATALOW_MESSAGE_CONSTANT = 216
+FB_EVENT_TYPE_CODE = 217
+TWILIO_MESSAGE = 218
+WEB_MESSAGE_TYPE_CODE = 219
+GENERIC_SMS_TYPE_CODE = 220
+//CPGRAM
+CPGRAMS_GRIEVANCE = 221
+//Email
+EMAIL_REPLY = 222
+CPGRAMS_ACTION = 223
+CPGRAMS_REMINDER = 224
+GPLUS_BUSINESS_LOCATION_REVIEW = 225
+GPLUS_BUSINESS_LOCATION_REVIEW_REPLY = 226
+FB_SHARE = 227
+SPRINKLR_COMMERCE_COMMENT = 228
+// Community
+COMMUNITY_POST = 229
+COMMUNITY_COMMENT = 230
+COMMUNITY_REPLY = 231
+GOOGLE_APP_REVIEW = 232
+GOOGLE_APP_REVIEW_REPLY = 233
+NIKE_PRODUCT = 234
+//Kakao
+KAKAO_STORY = 235
+KAKAO_STORY_COMMENT = 236
+//LPDLG
+LPDLG_GRIEVANCE = 237
+LPDLG_ACTION = 238
+//anomaly msg
+SPR_ALERT_MSG = 239
+// Sprinklr Platform
+PLATFORM_POST = 240
+PLATFORM_COMMENT = 241
+PLATFORM_REPLY = 242
+//advocacy
+ADVOCACY_THREAD = 243
+// Message type for web
+WEB_COMMENT = 244
+XING_COMPANY_UPDATE = 245
+XING_COMPANY_UPDATE_COMMENT = 246
+//Sprinklr Chat
+SPRINKLR_CHAT_TYPE_POST = 247
+//ContentHub
+CONTENT_HUB_MESSAGE = 248
+CONTENT_HUB_USER_SHARE = 249
+CONTENT_HUB_USER_UPLOAD_CONTENT = 250
+CONTENT_HUB_ASSET_COMMENT = 251
+CONTENT_HUB_ASSET_REPLY = 252
+//advocacy
+ADV_THREAD_COMMENT = 253
+ADV_THREAD_REPLY = 254
+//Sprinklr Internal Collaboration
+SPR_COLLABORATION_MSG = 255
+//yelp
+YELP_REVIEW = 257
+YELP_REVIEW_REPLY = 258
+LITHIUM_PRIVATE_NOTE = 259
+//Community
+COMMUNITY_FEEDBACK = 260
+// yelp private message
+YELP_PRIVATE_MESSAGE = 261
+EXTERNAL_APPLICATION_MESSAGE = 262
+COMMUNITY_USER_STATUS_UPDATE = 263
+//jive
+JIVE_DIRECT_MESSAGE = 264
+JIVE_THREAD_DIRECT_MESSAGE = 265
+SPRINKLR_GROUP_CHAT_TYPE_POST = 266
+//Reddit
+REDDIT_SUBMISSION = 267
+//Linkedin Profile PMs
+LINKEDIN_PROFILE_PRIVATE_MESSAGE = 268
+LINKEDIN_PROFILE_RECOMMENDATION = 269
+LINKEDIN_PROFILE_RECOMMENDATION_REQUEST = 270
+LINKEDIN_PROFILE_SKILLS_ENDORSEMENT = 271
+//Instagram Story
+INSTAGRAM_STORY = 272
+//Reddit
+REDDIT_COMMENT = 273
+REDDIT_PRIVATE_MESSAGE = 274
+//KakaoTalk
+KAKAO_TALK_MESSAGE = 275
+//Viber
+VIBER_MESSAGE = 276
+VIBER_POST = 277
+DAILYMOTION_VIDEO_POST = 278
+DAILYMOTION_PLAYLIST_TYPE_CODE = 279
+//FB Conversation switch
+FB_CONTROL_SWITCH_MESSAGE = 280
+//Microsoft Exchange
+MICROSOFT_EXCHANGE_MAIL = 288
+MICROSOFT_EXCHANGE_REPLY = 289
+//Linkedin Reply
+LINKEDIN_COMPANY_REPLY = 290
+LINKEDIN_PROFILE_REPLY = 291
+LINKED_IN_ARTICLES = 292
+LINKED_IN_ARTICLES_COMMENTS = 293
+LINKED_IN_ARTICLES_REPLY = 294
+//Nextdoor
+NEXTDOOR_POST = 295
+NEXTDOOR_COMMENT = 296
+NEXTDOOR_REPLY = 297
+NEXTDOOR_CHAT = 298
+NEXTDOOR_PRIVATE_MESSAGE = 299
+MICROSOFT_EXCHANGE_SENT_REPLY = 300
+MICROSOFT_EXCHANGE_SENT_MAIL = 301
+//Linked In Re-Share
+LINKEDIN_RESHARE = 302
+// Instagram Mention
+INSTAGRAM_MENTION = 303
+INSTAGRAM_COMMENT_MENTION = 304
+INSTAGRAM_MENTIONED_COMMENT_MEDIA = 305
+INSTAGRAM_REPLY_TYPE_CODE = 306
+// Whatsapp
+WHATSAPP_MESSAGE = 307
+NEXMO_MESSAGE = 308
+GOOGLE_RBM = 309
+GOOGLE_RBM_INVITE = 310
+INSTAGRAM_MEDIA_TAG = 311
+YEXT_REVIEW = 312
+// Sprinklr Live Chat
+SPRINKLR_LIVE_CHAT_POST = 313
+SPRINKLR_LIVE_CHAT_POST_BACK = 314
+YEXT_COMMENT = 315
+WHATSAPP_BUSINESS_MESSAGE = 316
+APPLE_BUSINESS_CHAT_MESSAGE = 317
+VIBER_SERVICE_MESSAGE = 318
+WECHAT_MINIPROGRAM_MESSAGE = 319
+INSTAGRAM_DIRECT_MESSAGE = 320
+ALEXA_MESSAGE = 321
+PRINT_NEWS = 322
+RADIO_NEWS = 323
+TV_NEWS = 324
+SPRINKLR_VOICE = 325
+GOOGLE_BUSINESS_MESSAGE = 326
+GPLUS_LOCATION_QUESTION = 327
+GPLUS_LOCATION_ANSWER = 328
+DEFAULT_DATA_INGESTION_MESSAGE_TYPE = 329
+
+## Example
+
+## Taxonomy Object
+
+
+
+
+
+
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| campaignId* | String | Unique Identifier for campaign |
+| urlShortnerDomain | String | Urlshortnerdomain to be used for publishing. Example: spr.ly |
+| tags | List<String> | Object storing value of tags to message |
+| clientCustomProperties | Map<String, List<String>> | A map of client custom properties key, values pair that message is assigned to |
+| partnerCustomProperties | Map<String, List<String>> | A map of partner custom properties key, values pair that message is assigned to |
+
+## ChannelSpecificMessageDataContent Object
+
+
+
+
+
+[ChannelInfo Object](https://dev.sprinklr.com/message-v1#channel_info)
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| data | Content Object | Content Object |
+| channelInfo |  | Information about the Channel |
+
+## ChannelInfo Object
+
+
+
+
+
+
+
+[Channel Type](https://dev.sprinklr.com/channels-v1)
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| channelType |  | Channel Type |
+| accountType | String | Account Type |
+| accountId | Long | Unique identifier for the channel account added to the system |
+
+## Content Object
+
+
+
+[Attachment Object](https://dev.sprinklr.com/message-v1#attachment_object)
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| message* | String | Message description |
+| title | String | Message title |
+| attachment |  | Attachment objects with the message |
+
+## Attachment Object
+
+
+
+[Media Object](https://dev.sprinklr.com/message-v1#media_object)
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| type* | String | Attachment type: One of {PHOTO, VODEO, LINK, ALBUM} |
+| mediaList* | List<> | Media objects associated with the post |
+| title | String | Title of attachment |
+| description | String | Description of attachment |
+
+## Media Object
+
+
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| type* | String | Media type: One of {PHOTO, VIDEO, LINK} |
+| source* | String | URL of the media |
+| previewImageUrl | String | Preview URL of the media |
+| title | String | Title of attached media object |
+| description | String | Description of attached media object |
+
+## ChannelSpecificAudienceTarget Object
+
+
+
+[ChannelInfo Object](https://dev.sprinklr.com/message-v1#channel_info)
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| data | Map Audience Target Field, List of Audience Target Option Object | Audience Target Field option values as Map |
+| channelInfo |  | Information about the channel |
+
+## Audience Target Option Object
+
+
+
+| Fields | Type | Description |
+| --- | --- | --- |
+| key | String | Channel specific key (to get the possible values for keys refer this API) |
+| label | String | Label |
+| subtext | String | Unique identifier for the channel account added to the system |
+
+## Channel Type
+
+**Note that only relevant channels are listed here.**
+
+- FACEBOOK
+
+- TWITTER
+
+- LINKEDIN
+
+- TIKTOK
+
+- YOUTUBE
+
+- INSTAGRAM
+
+- WORKFLOW
+
+- USER_FEEDBACK
+
+- SINA_WEIBO
+
+- RENREN
+
+- TENCENT_WEIBO
+
+- GOOGLE_PLUS
+
+- VK
+
+## Audience Target Field Values
+
+- GENDER
+
+- MAX_AGE
+
+- MIN_AGE
+
+- COUNTRY
+
+- REGION
+
+- CITY
+
+- RELATIONSHIP_STATUS
+
+- INTERESTED_IN
+
+- LOCALES
+
+- EDUCATION_STATUS
+
+- PRECISE_INTEREST
+
+- WORKPLACES
+
+- EDUCATION_NETWORKS
+
+- EDUCATION_MAJORS
+
+- LIC_JOB_FUNC
+
+- LIC_SENIORITY
+
+- LIC_GEOGRAPHY
+
+- LIC_INDUSTRY
+
+- LIC_COMPANY_SIZE
+
+- GPLUS_CIRCLE
+
+## Attachment Type
+
+- PHOTO
+
+- VIDEO
+
+- LINK
+
+- ALBUM
+
+- PDF
+
+- DOCUMENT
+
+- PRESENTATION
+
+- MIXED
+
+- AUDIO
+
+- GRAFFITI
+
+- OFFER
+
+- EVENT
+
+[](https://dev.sprinklr.com/message-v1) 
+
+ 
+
+ 
+[Back to top](https://dev.sprinklr.com/message-v1)
