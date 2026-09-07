@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .env
+
+# oversized derived scrape metadata (not the article corpus)
+exports/*.json

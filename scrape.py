@@ -14,6 +14,7 @@ import subprocess
 import json
 import re
 import sys
+import time
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from html.parser import HTMLParser
@@ -23,7 +24,7 @@ DATA_DIR = Path(__file__).parent / "data" / "articles"
 SPEC_DIR = Path(__file__).parent / "data" / "specs"
 SITEMAP_URL = "https://dev.sprinklr.com/sitemap.xml"
 API_BASE = "https://dev.sprinklr.com/portals/api/sites/spr-apigee-prod-apiprodportal/liveportal"
-MAX_WORKERS = 15
+MAX_WORKERS = 6      # dev portal rate-limits a fast fan-out; keep concurrency gentle
 CURL_TIMEOUT = 20
 
 
@@ -306,39 +307,50 @@ url: https://dev.sprinklr.com/{article['slug']}
     return filepath
 
 
-def fetch_and_save_all(slugs):
-    slug_list = sorted(slugs)
-    print(f"\nPhase 2: Fetching {len(slug_list)} pages...")
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
+def _fetch_batch(slug_list, workers):
+    """Fetch one batch at the given concurrency. Returns (saved, still_failed)."""
     saved = 0
-    failed = 0
-    done = 0
     failed_slugs = []
-
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+    done = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(fetch_article, s): s for s in slug_list}
         for future in as_completed(futures):
             done += 1
             if done % 50 == 0 or done == len(slug_list):
-                print(f"  Fetched {done}/{len(slug_list)} — saved: {saved}, failed: {failed}")
+                print(f"  Fetched {done}/{len(slug_list)} — saved: {saved}, failed: {len(failed_slugs)}")
             try:
                 result = future.result()
                 if result:
                     save_article(result)
                     saved += 1
                 else:
-                    failed += 1
                     failed_slugs.append(futures[future])
-            except Exception as e:
-                failed += 1
+            except Exception:
                 failed_slugs.append(futures[future])
+    return saved, failed_slugs
+
+
+def fetch_and_save_all(slugs):
+    slug_list = sorted(slugs)
+    print(f"\nPhase 2: Fetching {len(slug_list)} pages...")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    saved, failed_slugs = _fetch_batch(slug_list, MAX_WORKERS)
+    # The portal throttles a fast fan-out (429s show up as failures partway through).
+    # Retry the failures a few times, pausing and going gentler each round, which
+    # recovers the throttled ones without a heavier dependency.
+    rounds = 0
+    while failed_slugs and rounds < 3:
+        rounds += 1
+        print(f"  retry {rounds}: {len(failed_slugs)} failed, pausing 10s then retrying gently...")
+        time.sleep(10)
+        recovered, failed_slugs = _fetch_batch(failed_slugs, 3)
+        saved += recovered
 
     print(f"\nSaved {saved} articles to {DATA_DIR}")
-    if failed:
-        print(f"  ({failed} pages failed)")
-        if failed_slugs[:10]:
-            print(f"  Sample failures: {failed_slugs[:10]}")
+    if failed_slugs:
+        print(f"  ({len(failed_slugs)} still failed after {rounds} retries)")
+        print(f"  Sample failures: {failed_slugs[:10]}")
     return saved
 
 
@@ -382,7 +394,12 @@ def main():
         sys.exit(1)
 
     saved = fetch_and_save_all(slugs)
-    fetch_spec()
+    # The OpenAPI spec is a bonus artifact, not one of the article .md files. A
+    # throttled/non-JSON response here must not kill the whole scrape.
+    try:
+        fetch_spec()
+    except Exception as e:
+        print(f"  spec fetch skipped (non-fatal): {type(e).__name__}: {e}")
 
     print(f"\n{'='*60}")
     print(f"Scraping complete: {saved} articles + OpenAPI spec")
